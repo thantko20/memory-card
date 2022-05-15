@@ -26,22 +26,41 @@ const App = () => {
   // Cards
   const [playCards, setPlayCards] = useState([]);
   // playCards array will be updated as the size changes
-  // with level
+  // over time
   useEffect(() => {
     setPlayCards(_.sampleSize(agentsData, size));
   }, [agentsData, size]);
+
+  const [clickedNames, setClickedNames] = useState([]);
+
+  const handleOnCardClick = (agentName) => {
+    if (clickedNames.includes(agentName)) {
+      alert('Game Over');
+      return;
+    }
+    setClickedNames(() => {
+      const newClickedNames = [...clickedNames, agentName];
+      if (newClickedNames.length === playCards.length) {
+        setSize(size + 4);
+        return [];
+      }
+
+      setPlayCards(_.shuffle(playCards));
+
+      return newClickedNames;
+    });
+  };
 
   return (
     <div className='min-h-screen bg-zinc-900 text-slate-50 font-varela'>
       <Header />
       <Main
         cards={playCards}
-        handleOnCardClick={() => {}}
+        handleOnCardClick={handleOnCardClick}
         level={'1'}
         score={'2'}
         highScore={'3'}
       />
-      <button onClick={() => setSize(size + 1)}>Click</button>
     </div>
   );
 };
