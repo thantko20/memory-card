@@ -3,12 +3,12 @@ import CardsContainer from './CardsContainer';
 import StatsBoard from './StatsBoard';
 
 const Main = (props) => {
-  const { agentsData, handleOnCardClick, level, score, highScore } = props;
+  const { cards, handleOnCardClick, level, score, highScore } = props;
 
   return (
-    <div>
+    <div className='p-6 flex flex-col items-center gap-6'>
       <StatsBoard level={level} score={score} highScore={highScore} />
-      <CardsContainer cards={agentsData} onCardClick={handleOnCardClick} />
+      <CardsContainer cards={cards} onCardClick={handleOnCardClick} />
     </div>
   );
 };
