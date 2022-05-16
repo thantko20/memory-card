@@ -47,25 +47,37 @@ const App = () => {
     setClickedNames([]);
   };
 
+  const levelUp = () => {
+    if (size + 4 > agentsData.length) {
+      resetGame();
+      return;
+    }
+    setSize(size + 4);
+    setLevel(level + 1);
+    setScore(score + 1);
+  };
+
+  const completeRound = () => {
+    setPlayCards(_.shuffle(playCards));
+    setScore(score + 1);
+  };
+
   const handleOnCardClick = (agentName) => {
+    // Lost,i.e, reset the game
     if (clickedNames.includes(agentName)) {
       resetGame();
       return;
     }
-    setClickedNames(() => {
-      const newClickedNames = [...clickedNames, agentName];
-      if (newClickedNames.length === playCards.length) {
-        setSize(size + 4);
-        setLevel(level + 1);
-        setScore(score + 1);
-        return [];
-      }
 
-      setPlayCards(_.shuffle(playCards));
-      setScore(score + 1);
+    let newClickedNames = [...clickedNames, agentName];
+    if (newClickedNames.length === playCards.length) {
+      levelUp();
+      newClickedNames = [];
+    } else {
+      completeRound();
+    }
 
-      return newClickedNames;
-    });
+    setClickedNames(newClickedNames);
   };
 
   return (
