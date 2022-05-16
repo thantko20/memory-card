@@ -6,7 +6,7 @@ const Main = (props) => {
   const { cards, handleOnCardClick, level, score, highScore } = props;
 
   return (
-    <div className='p-6 flex flex-col items-center gap-6'>
+    <div className='p-6 flex flex-col items-center gap-6 flex-grow'>
       <StatsBoard level={level} score={score} highScore={highScore} />
       <CardsContainer cards={cards} onCardClick={handleOnCardClick} />
     </div>
