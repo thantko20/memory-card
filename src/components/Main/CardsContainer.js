@@ -6,7 +6,7 @@ const CardsContainer = (props) => {
   const { cards, onCardClick } = props;
 
   return (
-    <div className='grid grid-cols-2 md:grid-cols-4 justify-center gap-7 mt-6'>
+    <div className='grid grid-cols-2 md:grid-cols-4 justify-center gap-7'>
       {cards.map((card) => (
         <Card
           name={card.displayName}
