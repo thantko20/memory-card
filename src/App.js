@@ -4,12 +4,22 @@ import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 
 const App = () => {
-  // Current Cards Array size
+  const [agentsData, setAgentsData] = useState([]); // Reference to be stored from api req
+  const [playCards, setPlayCards] = useState([]); // Cards to be played
+  const [clickedNames, setClickedNames] = useState([]);
+  const [level, setLevel] = useState(1);
   const [size, setSize] = useState(4);
+  const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
 
-  // Original Data
-  const [agentsData, setAgentsData] = useState([]);
+  // Change highscore based on *score* every render
+  useEffect(() => {
+    if (score > highScore) {
+      setHighScore(score);
+    }
+  }, [score, highScore]);
 
+  // API Req after first render
   useEffect(() => {
     const fetchAgentsData = async () => {
       const req = await fetch(
@@ -23,29 +33,36 @@ const App = () => {
     fetchAgentsData();
   }, []);
 
-  // Cards
-  const [playCards, setPlayCards] = useState([]);
   // playCards array will be updated as the size changes
   // over time
   useEffect(() => {
     setPlayCards(_.sampleSize(agentsData, size));
   }, [agentsData, size]);
 
-  const [clickedNames, setClickedNames] = useState([]);
+  const resetGame = () => {
+    setSize(4);
+    setPlayCards(_.shuffle(playCards));
+    setLevel(1);
+    setScore(0);
+    setClickedNames([]);
+  };
 
   const handleOnCardClick = (agentName) => {
     if (clickedNames.includes(agentName)) {
-      alert('Game Over');
+      resetGame();
       return;
     }
     setClickedNames(() => {
       const newClickedNames = [...clickedNames, agentName];
       if (newClickedNames.length === playCards.length) {
         setSize(size + 4);
+        setLevel(level + 1);
+        setScore(score + 1);
         return [];
       }
 
       setPlayCards(_.shuffle(playCards));
+      setScore(score + 1);
 
       return newClickedNames;
     });
@@ -57,9 +74,9 @@ const App = () => {
       <Main
         cards={playCards}
         handleOnCardClick={handleOnCardClick}
-        level={'1'}
-        score={'2'}
-        highScore={'3'}
+        level={level}
+        score={score}
+        highScore={highScore}
       />
     </div>
   );
