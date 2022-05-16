@@ -14,7 +14,7 @@ const Footer = () => {
         >
           <FontAwesomeIcon
             icon={faGithub}
-            className='text-xl ml-2 hover:text-rose-400'
+            className='text-xl ml-2 hover:text-rose-400 animate-bounce'
           />
         </a>
       </div>
