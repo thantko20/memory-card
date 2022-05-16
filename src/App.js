@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
+import Footer from './components/Footer';
 
 const App = () => {
   const [agentsData, setAgentsData] = useState([]); // Reference to be stored from api req
@@ -81,7 +82,7 @@ const App = () => {
   };
 
   return (
-    <div className='min-h-screen bg-zinc-900 text-slate-50 font-varela'>
+    <div className='min-h-screen bg-zinc-900 text-slate-50 font-varela flex flex-col'>
       <Header />
       <Main
         cards={playCards}
@@ -90,6 +91,7 @@ const App = () => {
         score={score}
         highScore={highScore}
       />
+      <Footer />
     </div>
   );
 };
